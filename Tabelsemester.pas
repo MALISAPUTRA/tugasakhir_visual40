@@ -46,7 +46,7 @@ type
     frxDBDataset1: TfrxDBDataset;
     frxReport1: TfrxReport;
     procedure FormCreate(Sender: TObject);
-    procedure editbersih;
+    procedure bersih;
     procedure editenable;
     procedure posisiawal;
     procedure b1Click(Sender: TObject);
@@ -71,7 +71,7 @@ implementation
 
 {$R *.dfm}
 
-procedure TForm8.editbersih;
+procedure TForm8.bersih;
 begin
 c1.text:= '';
 c2.text:= '';
@@ -101,38 +101,38 @@ begin
 zqry2.First;
 while not zqry2.Eof do
 begin
-  c1.items.add(zqry2.fieldbyname('siswa_id').asstring);
+  c1.items.add(zqry2.fieldbyname('id').asstring);
   zqry2.Next;
 end;
 zqry3.First;
 while not zqry3.Eof do
 begin
-  c2.items.add(zqry3.fieldbyname('poin_id').asstring);
+  c2.items.add(zqry3.fieldbyname('id').asstring);
   zqry3.Next;
 end;
 zqry4.First;
 while not zqry4.Eof do
 begin
-  c3.items.add(zqry4.fieldbyname('wali_id').asstring);
+  c3.items.add(zqry4.fieldbyname('id').asstring);
   zqry4.Next;
 end;
 zqry5.First;
 while not zqry5.Eof do
 begin
-  c4.items.add(zqry5.fieldbyname('ortu_id').asstring);
+  c4.items.add(zqry5.fieldbyname('id').asstring);
   zqry5.Next;
 end;
 zqry6.First;
 while not zqry6.Eof do
 begin
-  c5.items.add(zqry6.fieldbyname('kelas_id').asstring);
+  c5.items.add(zqry6.fieldbyname('id').asstring);
   zqry6.Next;
 end;
 end;
 
 procedure TForm8.posisiawal;
 begin
-editbersih;
+bersih;
 
 c1.Enabled:= false;
 c2.Enabled:= false;
@@ -153,7 +153,7 @@ end;
 
 procedure TForm8.b1Click(Sender: TObject);
 begin
-editbersih;
+bersih;
 
 b1.Enabled:= false;
 b2.Enabled:= True;
@@ -173,11 +173,11 @@ end else
 begin
 //simpan
 zqry1.SQL.Clear;
-zqry1.SQL.Add('insert into tabel_semester values (null,"'+c1.Text+'","'+c2.Text+'","'+c3.Text+'","'+c4.Text+'","'+c5.Text+'","'+FormatDateTime('yyyy-mm-dd',dtp1.Date)+'","'+Edit1.Text+'","'+Edit2.Text+'","'+Edit3.Text+'")');
+zqry1.SQL.Add('insert into tbl_semester values (null,"'+c1.Text+'","'+c2.Text+'","'+c3.Text+'","'+c4.Text+'","'+c5.Text+'","'+FormatDateTime('yyyy-mm-dd',dtp1.Date)+'","'+Edit1.Text+'","'+Edit2.Text+'","'+Edit3.Text+'")');
 zqry1.ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_semester');
+zqry1.SQL.Add('select * from tbl_semester');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DISIMPAN!');
 posisiawal;
@@ -197,14 +197,14 @@ ShowMessage('DATA TIDAK ADA PERUBAHAN');
 posisiawal;
 end else
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_semester').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 ShowMessage('DATA BERHASIL DIUPDATE!'); //UPDATE
 zqry1.SQL.Clear;
-zqry1.SQL.Add('Update tabel_semester set id_siswa="'+c1.Text+'",id_poin="'+c2.Text+'",id_wali="'+c3.Text+'",id_ortu="'+c4.Text+'",id_kelas="'+c5.Text+'",tanggal= "'+FormatDateTime('yyyy-mm-dd',dtp1.Date)+'",semester="'+Edit1.Text+'",status="'+Edit2.Text+'",tingkat_kelas="'+Edit3.Text+'" where id_semester="'+id+'"');
+zqry1.SQL.Add('Update tbl_semester set id="'+c1.Text+'",id="'+c2.Text+'",id="'+c3.Text+'",id="'+c4.Text+'",id="'+c5.Text+'",tanggal= "'+FormatDateTime('yyyy-mm-dd',dtp1.Date)+'",semester="'+Edit1.Text+'",status="'+Edit2.Text+'",tingkat_kelas="'+Edit3.Text+'" where id="'+id+'"');
 zqry1.ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_semester');
+zqry1.SQL.Add('select * from tbl_semester');
 zqry1.Open;
 posisiawal;
 end;
@@ -214,12 +214,12 @@ procedure TForm8.b4Click(Sender: TObject);
 begin
 if MessageDlg('APAKAH YAKIN MENGHAPUS DATA INI?',mtWarning,[mbYes,mbNo],0)= mryes then
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_semester').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 zqry1.SQL.Clear;
-zqry1.SQL.Add(' delete from tabel_semester where id_semester="'+id+'"');
+zqry1.SQL.Add(' delete from tbl_semester where id="'+id+'"');
 zqry1. ExecSQL;
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_semester');
+zqry1.SQL.Add('select * from tbl_semester');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DIHAPUS');
 posisiawal;

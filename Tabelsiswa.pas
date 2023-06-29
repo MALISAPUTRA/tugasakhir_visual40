@@ -45,7 +45,7 @@ type
     dtp1: TDateTimePicker;
     frxReport1: TfrxReport;
     frxdbdtst1: TfrxDBDataset;
-    procedure editbersih;
+    procedure bersih;
     procedure editenable;
     procedure posisiawal;
     procedure b1Click(Sender: TObject);
@@ -72,7 +72,7 @@ implementation
 
 { TForm6 }
 
-procedure TForm6.editbersih;
+procedure TForm6.bersih;
 begin
 Edit1.Clear;
 Edit2.Clear;
@@ -103,7 +103,7 @@ end;
 
 procedure TForm6.posisiawal;
 begin
-editbersih;
+bersih;
 
 edit1.Enabled:= false;
 edit2.Enabled:= false;
@@ -126,7 +126,7 @@ end;
 
 procedure TForm6.b1Click(Sender: TObject);
 begin
-editbersih;
+bersih;
 
 b1.Enabled:= false;
 b2.Enabled:= True;
@@ -151,11 +151,11 @@ end else
 begin
 //simpan
 zqry1.SQL.Clear;
-zqry1.SQL.Add('insert into table_siswa values (null,"'+Edit1.Text+'","'+Edit2.Text+'","'+Edit3.Text+'","'+Edit4.Text+'","'+Edit5.Text+'","'+FormatDateTime('yyyy-mm-dd',dtp1.Date)+'","'+Edit6.Text+'","'+c1.Text+'","'+Edit7.Text+'","'+Edit8.Text+'","'+Edit9.Text+'")');
+zqry1.SQL.Add('insert into tbl_siswa values (null,"'+Edit1.Text+'","'+Edit2.Text+'","'+Edit3.Text+'","'+Edit4.Text+'","'+Edit5.Text+'","'+FormatDateTime('yyyy-mm-dd',dtp1.Date)+'","'+Edit6.Text+'","'+c1.Text+'","'+Edit7.Text+'","'+Edit8.Text+'","'+Edit9.Text+'")');
 zqry1.ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from table_siswa');
+zqry1.SQL.Add('select * from tbl_siswa');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DISIMPAN!');
 posisiawal;
@@ -175,14 +175,14 @@ ShowMessage('DATA TIDAK ADA PERUBAHAN');
 posisiawal;
 end else
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_siswa').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 ShowMessage('DATA BERHASIL DIUPDATE!'); //UPDATE
 zqry1.SQL.Clear;
-zqry1.SQL.Add('Update table_siswa set nis= "'+Edit1.Text+'",nisn="'+Edit2.Text+'",nama="'+Edit3.Text+'",nik="'+Edit4.Text+'",tempat_lahir="'+Edit5.Text+'",tgl_lahir="'+FormatDateTime('yyyy-mm-dd',dtp1.Date)+'",jenis_kelamin="'+c1.Text+'",alamat="'+Edit6.Text+'",telp="'+Edit7.Text+'",hp="'+Edit8.Text+'",status="'+Edit9.Text+'" where id_siswa="'+id+'"');
+zqry1.SQL.Add('Update tbl_siswa set nis= "'+Edit1.Text+'",nisn="'+Edit2.Text+'",nama="'+Edit3.Text+'",nik="'+Edit4.Text+'",tempat_lahir="'+Edit5.Text+'",tgl_lahir="'+FormatDateTime('yyyy-mm-dd',dtp1.Date)+'",jenis_kelamin="'+c1.Text+'",alamat="'+Edit6.Text+'",telp="'+Edit7.Text+'",hp="'+Edit8.Text+'",status="'+Edit9.Text+'" where id="'+id+'"');
 zqry1. ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from table_siswa');
+zqry1.SQL.Add('select * from tbl_siswa');
 zqry1.Open;
 posisiawal;
 end;
@@ -192,12 +192,12 @@ procedure TForm6.b4Click(Sender: TObject);
 begin
 if MessageDlg('APAKAH YAKIN MENGHAPUS DATA INI?',mtWarning,[mbYes,mbNo],0)= mryes then
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_siswa').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 zqry1.SQL.Clear;
-zqry1.SQL.Add(' delete from table_siswa where id_siswa="'+id+'"');
+zqry1.SQL.Add(' delete from tbl_siswa where id="'+id+'"');
 zqry1. ExecSQL;
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from table_siswa');
+zqry1.SQL.Add('select * from tbl_siswa');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DIHAPUS');
 posisiawal;

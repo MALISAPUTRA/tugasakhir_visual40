@@ -25,8 +25,6 @@ type
     ds1: TDataSource;
     con1: TZConnection;
     zqry1: TZQuery;
-    frxDBDataset1: TfrxDBDataset;
-    frxReport1: TfrxReport;
     frxrprt1: TfrxReport;
     frxdbdtst1: TfrxDBDataset;
     procedure bersih;
@@ -139,7 +137,7 @@ begin
 id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 ShowMessage('DATA BERHASIL DIUPDATE!'); //UPDATE
 zqry1.SQL.Clear;
-zqry1.SQL.Add('Update tbl_kls set nama= "'+Edit1.Text+'",jenis="'+Edit2.Text+'" where id_kelas="'+id+'"');
+zqry1.SQL.Add('Update tbl_kls set nama= "'+Edit1.Text+'",jenis="'+Edit2.Text+'",jurusan= "'+c1.Text+'" where id="'+id+'"');
 zqry1. ExecSQL;
 
 zqry1.SQL.Clear;

@@ -37,7 +37,7 @@ type
     c1: TComboBox;
     frxrprt1: TfrxReport;
     frxdbdtst1: TfrxDBDataset;
-    procedure editbersih;
+    procedure bersih;
     procedure editenable;
     procedure posisiawal;
     procedure b1Click(Sender: TObject);
@@ -64,7 +64,7 @@ implementation
 
 { TForm2 }
 
-procedure TForm2.editbersih;
+procedure TForm2.bersih;
 begin
 Edit1.Clear;
 Edit2.Clear;
@@ -90,7 +90,7 @@ end;
 
 procedure TForm2.posisiawal;
 begin
-editbersih;
+bersih;
 
 edit1.Enabled:= false;
 edit2.Enabled:= false;
@@ -110,7 +110,7 @@ end;
 
 procedure TForm2.b1Click(Sender: TObject);
 begin
-editbersih;
+bersih;
 
 b1.Enabled:= false;
 b2.Enabled:= True;
@@ -135,11 +135,11 @@ end else
 begin
 //simpan
 zqry1.SQL.Clear;
-zqry1.SQL.Add('insert into tabel_wali_kelas values (null,"'+Edit1.Text+'","'+Edit2.Text+'","'+c1.Text+'","'+Edit3.Text+'","'+Edit4.Text+'","'+Edit5.Text+'","'+Edit6.Text+'","'+Edit7.Text+'")');
+zqry1.SQL.Add('insert into tbl_walikelas values (null,"'+Edit1.Text+'","'+Edit2.Text+'","'+c1.Text+'","'+Edit3.Text+'","'+Edit4.Text+'","'+Edit5.Text+'","'+Edit6.Text+'","'+Edit7.Text+'")');
 zqry1.ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_wali_kelas');
+zqry1.SQL.Add('select * from tbl_walikelas');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DISIMPAN!');
 posisiawal;
@@ -159,14 +159,14 @@ ShowMessage('DATA TIDAK ADA PERUBAHAN');
 posisiawal;
 end else
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_wali').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 ShowMessage('DATA BERHASIL DIUPDATE!'); //UPDATE
 zqry1.SQL.Clear;
-zqry1.SQL.Add('Update tabel_wali_kelas set nik= "'+Edit1.Text+'",nama="'+Edit2.Text+'",jenis_kelamin="'+c1.Text+'",pendidikan="'+Edit3.Text+'",telp="'+Edit4.Text+'",matpel="'+Edit5.Text+'",alamat="'+Edit6.Text+'",status="'+Edit7.Text+'" where id_wali="'+id+'"');
+zqry1.SQL.Add('Update tbl_walikelas set nik= "'+Edit1.Text+'",nama="'+Edit2.Text+'",jenis_kelamin="'+c1.Text+'",pendidikan="'+Edit3.Text+'",telp="'+Edit4.Text+'",matpel="'+Edit5.Text+'",alamat="'+Edit6.Text+'",status="'+Edit7.Text+'" where id="'+id+'"');
 zqry1. ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_wali_kelas');
+zqry1.SQL.Add('select * from tbl_walikelas');
 zqry1.Open;
 posisiawal;
 end;
@@ -176,12 +176,12 @@ procedure TForm2.b4Click(Sender: TObject);
 begin
 if MessageDlg('APAKAH YAKIN MENGHAPUS DATA INI?',mtWarning,[mbYes,mbNo],0)= mryes then
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_wali').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 zqry1.SQL.Clear;
-zqry1.SQL.Add(' delete from tabel_wali_kelas where id_wali="'+id+'"');
+zqry1.SQL.Add(' delete from tbl_walikelas where id="'+id+'"');
 zqry1. ExecSQL;
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_wali_kelas');
+zqry1.SQL.Add('select * from tbl_walikelas');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DIHAPUS');
 posisiawal;

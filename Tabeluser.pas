@@ -29,7 +29,7 @@ type
     l4: TLabel;
     frxrprt1: TfrxReport;
     frxdbdtst1: TfrxDBDataset;
-    procedure editbersih;
+    procedure bersih;
     procedure editenable;
     procedure posisiawal;
     procedure b1Click(Sender: TObject);
@@ -56,7 +56,7 @@ implementation
 
 { TForm5 }
 
-procedure TForm5.editbersih;
+procedure TForm5.bersih;
 begin
 Edit1.Clear;
 Edit2.Clear;
@@ -74,7 +74,7 @@ end;
 
 procedure TForm5.posisiawal;
 begin
-editbersih;
+bersih;
 
 edit1.Enabled:= false;
 edit2.Enabled:= false;
@@ -90,7 +90,7 @@ end;
 
 procedure TForm5.b1Click(Sender: TObject);
 begin
-editbersih;
+bersih;
 
 b1.Enabled:= false;
 b2.Enabled:= True;
@@ -115,11 +115,11 @@ end else
 begin
 //simpan
 zqry1.SQL.Clear;
-zqry1.SQL.Add('insert into tabel_user values (null,"'+Edit1.Text+'","'+Edit2.Text+'","'+Edit3.Text+'","'+Edit4.Text+'")');
+zqry1.SQL.Add('insert into tbl_user values (null,"'+Edit1.Text+'","'+Edit2.Text+'","'+Edit3.Text+'","'+Edit4.Text+'")');
 zqry1.ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_user');
+zqry1.SQL.Add('select * from tbl_user');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DISIMPAN!');
 posisiawal;
@@ -139,14 +139,14 @@ ShowMessage('DATA TIDAK ADA PERUBAHAN');
 posisiawal;
 end else
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_user').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 ShowMessage('DATA BERHASIL DIUPDATE!'); //UPDATE
 zqry1.SQL.Clear;
-zqry1.SQL.Add('Update tabel_user set username= "'+Edit1.Text+'",password="'+Edit2.Text+'",level="'+Edit3.Text+'",status="'+Edit4.Text+'" where id_user="'+id+'"');
+zqry1.SQL.Add('Update tbl_user set username= "'+Edit1.Text+'",password="'+Edit2.Text+'",level="'+Edit3.Text+'",status="'+Edit4.Text+'" where id="'+id+'"');
 zqry1. ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_user');
+zqry1.SQL.Add('select * from tbl_user');
 zqry1.Open;
 posisiawal;
 end;
@@ -156,12 +156,12 @@ procedure TForm5.b4Click(Sender: TObject);
 begin
 if MessageDlg('APAKAH YAKIN MENGHAPUS DATA INI?',mtWarning,[mbYes,mbNo],0)= mryes then
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_user').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 zqry1.SQL.Clear;
-zqry1.SQL.Add(' delete from tabel_user where id_user="'+id+'"');
+zqry1.SQL.Add(' delete from tbl_user where id="'+id+'"');
 zqry1. ExecSQL;
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_user');
+zqry1.SQL.Add('select * from tbl_user');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DIHAPUS');
 posisiawal;

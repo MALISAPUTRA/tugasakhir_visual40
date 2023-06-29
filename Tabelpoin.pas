@@ -30,7 +30,7 @@ type
     l4: TLabel;
     frxrprt1: TfrxReport;
     frxdbdtst1: TfrxDBDataset;
-    procedure editbersih;
+    procedure bersih;
     procedure editenable;
     procedure posisiawal;
     procedure b1Click(Sender: TObject);
@@ -57,7 +57,7 @@ implementation
 
 { TForm4 }
 
-procedure TForm4.editbersih;
+procedure TForm4.bersih;
 begin
 Edit1.Clear;
 Edit2.Clear;
@@ -75,7 +75,7 @@ end;
 
 procedure TForm4.posisiawal;
 begin
-editbersih;
+bersih;
 
 edit1.Enabled:= false;
 edit2.Enabled:= false;
@@ -91,7 +91,7 @@ end;
 
 procedure TForm4.b1Click(Sender: TObject);
 begin
-editbersih;
+bersih;
 
 b1.Enabled:= false;
 b2.Enabled:= True;
@@ -116,11 +116,11 @@ end else
 begin
 //simpan
 zqry1.SQL.Clear;
-zqry1.SQL.Add('insert into tabel_poin values (null,"'+Edit1.Text+'","'+Edit2.Text+'","'+c1.Text+'","'+c2.Text+'")');
+zqry1.SQL.Add('insert into tbl_poin values (null,"'+Edit1.Text+'","'+Edit2.Text+'","'+c1.Text+'","'+c2.Text+'")');
 zqry1.ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_poin');
+zqry1.SQL.Add('select * from tbl_poin');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DISIMPAN!');
 posisiawal;
@@ -140,14 +140,14 @@ ShowMessage('DATA TIDAK ADA PERUBAHAN');
 posisiawal;
 end else
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_poin').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 ShowMessage('DATA BERHASIL DIUPDATE!'); //UPDATE
 zqry1.SQL.Clear;
-zqry1.SQL.Add('Update tabel_poin set nama_poin= "'+Edit1.Text+'",bobot="'+Edit2.Text+'",jenis="'+c1.Text+'",status="'+c2.Text+'" where id_poin="'+id+'"');
+zqry1.SQL.Add('Update tbl_poin set nama_poin= "'+Edit1.Text+'",bobot="'+Edit2.Text+'",jenis="'+c1.Text+'",status="'+c2.Text+'" where id="'+id+'"');
 zqry1. ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_poin');
+zqry1.SQL.Add('select * from tbl_poin');
 zqry1.Open;
 posisiawal;
 end;
@@ -157,12 +157,12 @@ procedure TForm4.b4Click(Sender: TObject);
 begin
 if MessageDlg('APAKAH YAKIN MENGHAPUS DATA INI?',mtWarning,[mbYes,mbNo],0)= mryes then
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_poin').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 zqry1.SQL.Clear;
-zqry1.SQL.Add(' delete from tabel_poin where id_poin="'+id+'"');
+zqry1.SQL.Add(' delete from tbl_poin where id="'+id+'"');
 zqry1. ExecSQL;
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_poin');
+zqry1.SQL.Add('select * from tbl_poin');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DIHAPUS');
 posisiawal;

@@ -39,7 +39,7 @@ type
     Edit8: TEdit;
     frxReport1: TfrxReport;
     frxdbdtst1: TfrxDBDataset;
-    procedure editbersih;
+    procedure bersih;
     procedure editenable;
     procedure posisiawal;
     procedure b1Click(Sender: TObject);
@@ -66,7 +66,7 @@ implementation
 
 { TForm3 }
 
-procedure TForm3.editbersih;
+procedure TForm3.bersih;
 begin
 Edit1.Clear;
 Edit2.Clear;
@@ -94,7 +94,7 @@ end;
 
 procedure TForm3.posisiawal;
 begin
-editbersih;
+bersih;
 
 edit1.Enabled:= false;
 edit2.Enabled:= false;
@@ -115,7 +115,7 @@ end;
 
 procedure TForm3.b1Click(Sender: TObject);
 begin
-editbersih;
+bersih;
 
 b1.Enabled:= false;
 b2.Enabled:= True;
@@ -140,11 +140,11 @@ end else
 begin
 //simpan
 zqry1.SQL.Clear;
-zqry1.SQL.Add('insert into tabel_ortu values (null,"'+Edit1.Text+'","'+Edit2.Text+'","'+Edit3.Text+'","'+Edit4.Text+'","'+Edit5.Text+'","'+Edit6.Text+'","'+c1.Text+'","'+Edit7.Text+'","'+Edit8.Text+'")');
+zqry1.SQL.Add('insert into tbl_ortu values (null,"'+Edit1.Text+'","'+Edit2.Text+'","'+Edit3.Text+'","'+Edit4.Text+'","'+Edit5.Text+'","'+Edit6.Text+'","'+c1.Text+'","'+Edit7.Text+'","'+Edit8.Text+'")');
 zqry1.ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_ortu');
+zqry1.SQL.Add('select * from tbl_ortu');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DISIMPAN!');
 posisiawal;
@@ -164,14 +164,14 @@ ShowMessage('DATA TIDAK ADA PERUBAHAN');
 posisiawal;
 end else
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_ortu').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 ShowMessage('DATA BERHASIL DIUPDATE!'); //UPDATE
 zqry1.SQL.Clear;
-zqry1.SQL.Add('Update tabel_ortu set nik= "'+Edit1.Text+'",nama="'+Edit2.Text+'",pendidikan="'+Edit3.Text+'",pekerjaan="'+Edit4.Text+'",telp="'+Edit5.Text+'",alamat="'+Edit6.Text+'",jenis_kelamin="'+c1.Text+'",agama="'+Edit7.Text+'",status="'+Edit8.Text+'" where id_ortu="'+id+'"');
+zqry1.SQL.Add('Update tbl_ortu set nik= "'+Edit1.Text+'",nama="'+Edit2.Text+'",pendidikan="'+Edit3.Text+'",pekerjaan="'+Edit4.Text+'",telp="'+Edit5.Text+'",alamat="'+Edit6.Text+'",jenis_kelamin="'+c1.Text+'",agama="'+Edit7.Text+'",status="'+Edit8.Text+'" where id="'+id+'"');
 zqry1. ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_ortu');
+zqry1.SQL.Add('select * from tbl_ortu');
 zqry1.Open;
 posisiawal;
 end;
@@ -181,12 +181,12 @@ procedure TForm3.b4Click(Sender: TObject);
 begin
 if MessageDlg('APAKAH YAKIN MENGHAPUS DATA INI?',mtWarning,[mbYes,mbNo],0)= mryes then
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_ortu').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 zqry1.SQL.Clear;
-zqry1.SQL.Add(' delete from tabel_ortu where id_ortu="'+id+'"');
+zqry1.SQL.Add(' delete from tbl_ortu where id="'+id+'"');
 zqry1. ExecSQL;
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_ortu');
+zqry1.SQL.Add('select * from tbl_ortu');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DIHAPUS');
 posisiawal;

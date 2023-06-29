@@ -33,7 +33,7 @@ type
     Edit3: TEdit;
     frxReport1: TfrxReport;
     frxdbdtst1: TfrxDBDataset;
-    procedure editbersih;
+    procedure bersih;
     procedure editenable;
     procedure posisiawal;
     procedure FormCreate(Sender: TObject);
@@ -61,7 +61,7 @@ implementation
 
 { TForm7 }
 
-procedure TForm7.editbersih;
+procedure TForm7.bersih;
 begin
 c1.text:= '';
 c2.text:= '';
@@ -81,7 +81,7 @@ end;
 
 procedure TForm7.posisiawal;
 begin
-editbersih;
+bersih;
 
 c1.Enabled:= false;
 c2.Enabled:= false;
@@ -102,20 +102,20 @@ begin
 zqry2.First;
 while not zqry2.Eof do
 begin
-  c1.items.add(zqry2.fieldbyname('siswa_id').asstring);
+  c1.items.add(zqry2.fieldbyname('id').asstring);
   zqry2.Next;
 end;
 zqry3.First;
 while not zqry3.Eof do
 begin
-  c2.items.add(zqry3.fieldbyname('ortu_id').asstring);
+  c2.items.add(zqry3.fieldbyname('id').asstring);
   zqry3.Next;
 end;
 end;
 
 procedure TForm7.b1Click(Sender: TObject);
 begin
-editbersih;
+bersih;
 
 b1.Enabled:= false;
 b2.Enabled:= True;
@@ -135,11 +135,11 @@ end else
 begin
 //simpan
 zqry1.SQL.Clear;
-zqry1.SQL.Add('insert into tabel_hubungan values (null,"'+c1.Text+'","'+c2.Text+'","'+Edit1.Text+'","'+Edit2.Text+'","'+Edit3.Text+'")');
+zqry1.SQL.Add('insert into tbl_hubungan values (null,"'+c1.Text+'","'+c2.Text+'","'+Edit1.Text+'","'+Edit2.Text+'","'+Edit3.Text+'")');
 zqry1.ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_hubungan');
+zqry1.SQL.Add('select * from tbl_hubungan');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DISIMPAN!');
 posisiawal;
@@ -159,14 +159,14 @@ ShowMessage('DATA TIDAK ADA PERUBAHAN');
 posisiawal;
 end else
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_hub').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 ShowMessage('DATA BERHASIL DIUPDATE!'); //UPDATE
 zqry1.SQL.Clear;
-zqry1.SQL.Add('Update tabel_hubungan set id_siswa="'+c1.Text+'",id_ortu="'+c2.Text+'",status_hubungan= "'+Edit1.Text+'",keterangan="'+Edit2.Text+'" ,status_ortu="'+Edit3.Text+'" where id_hub="'+id+'"');
+zqry1.SQL.Add('Update tbl_hubungan set id="'+c1.Text+'",id="'+c2.Text+'",status_hubungan= "'+Edit1.Text+'",keterangan="'+Edit2.Text+'" ,status_ortu="'+Edit3.Text+'" where id="'+id+'"');
 zqry1.ExecSQL;
 
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_hubungan');
+zqry1.SQL.Add('select * from tbl_hubungan');
 zqry1.Open;
 posisiawal;
 end;
@@ -176,12 +176,12 @@ procedure TForm7.b4Click(Sender: TObject);
 begin
 if MessageDlg('APAKAH YAKIN MENGHAPUS DATA INI?',mtWarning,[mbYes,mbNo],0)= mryes then
 begin
-id:=dg1.DataSource.DataSet.FieldByName('id_hub').AsString;
+id:=dg1.DataSource.DataSet.FieldByName('id').AsString;
 zqry1.SQL.Clear;
-zqry1.SQL.Add(' delete from tabel_hubungan where id_hub="'+id+'"');
+zqry1.SQL.Add(' delete from tbl_hubungan where id="'+id+'"');
 zqry1. ExecSQL;
 zqry1.SQL.Clear;
-zqry1.SQL.Add('select * from tabel_hubungan');
+zqry1.SQL.Add('select * from tbl_hubungan');
 zqry1.Open;
 ShowMessage('DATA BERHASIL DIHAPUS');
 posisiawal;
